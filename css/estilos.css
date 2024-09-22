@@ -1,0 +1,242 @@
+/* Reseteo básico de márgenes, padding y box-sizing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Estilos generales del cuerpo */
+body {
+    color: #4a4a4a;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    height: 100vh;
+    font-weight: 400;
+    background-color: #f4f7fa;
+}
+
+/* Cabecera del presupuesto */
+.cabecero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #6a1b9a;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Estilo para hacer la imagen responsiva */
+.imagen-cabecera {
+    max-width: 100%; /* La imagen no será más ancha que su contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    border-radius: 8px; /* Opcional: redondea los bordes de la imagen */
+    display: block; /* Elimina el espacio inferior extra */
+    margin: 0 auto; /* Centra la imagen en su contenedor */
+}
+
+
+/* Contenedor principal de los valores de presupuesto */
+.presupuesto {
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Título y valor del presupuesto */
+.presupuesto_titulo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.presupuesto_valor {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* Contenedor de ingresos y egresos separados a los extremos */
+.datos {
+    display: flex;
+    justify-content: space-between; /* Separa los elementos a los extremos */
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+}
+
+/* Estilos para ingresos y egresos */
+.presupuesto_ingreso {
+    flex: 1;
+    background: #9370db;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.presupuesto_egreso {
+    flex: 1;
+    background: #ba55d3;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: right;
+}
+
+/* Estilo de texto para los títulos y valores de ingresos y egresos */
+.presupuesto_ingreso--texto,
+.presupuesto_egreso--texto {
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.presupuesto_ingreso--valor,
+.presupuesto_egreso--valor {
+    font-size: 20px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+/* Botones y formularios */
+.agregar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 90%; /* Ajusta el ancho del formulario */
+    max-width: 900px; /* Tamaño máximo */
+    margin: 0 auto; /* Centra el formulario horizontalmente */
+    gap: 10px;
+}
+
+/* Ocultar las flechas de los inputs de tipo number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield; /* Para Firefox */
+}
+
+/* Estilo del contenedor que alinea los valores y el botón de borrar */
+.derecha {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Espacio entre los elementos para que el botón quede a la derecha */
+    gap: 10px; /* Espacio entre el valor y el botón */
+}
+
+/* Estilo para el botón de eliminar */
+.elemento_eliminar--btn {
+    margin-left: auto; /* Mueve el botón al extremo derecho del contenedor */
+    background-color: #9370db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+
+/* Estilos para los campos de formulario */
+.agregar_tipo {
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px;
+    width: auto;
+    min-width: 100px;
+}
+
+.agregar_descripcion,
+.agregar_valor {
+    border: 1px solid #d3d3d3;
+    border-radius: 5px;
+    height: 40px;
+    padding: 0 10px;
+    margin-right: 10px;
+}
+
+.agregar_btn {
+    background-color: #6a1b9a;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    height: 40px;
+    padding: 0 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Contenedor de ingresos y egresos */
+.contenedor {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* Estilo para secciones de ingresos y egresos */
+.ingreso,
+.egreso {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 300px;
+    margin: 10px 0;
+}
+
+h2 {
+    color: #6a1b9a;
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* Listas de ingresos y egresos con scroll */
+#lista-ingresos,
+#lista-egresos {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .datos {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: center;
+    }
+
+    .agregar {
+        flex-direction: column; /* Coloca el formulario en columna */
+        width: 100%;
+    }
+
+    .ingreso,
+    .egreso {
+        width: 100%;
+    }
+}
+
+.autor {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: rgba(106, 27, 154, 0.8); /* Fondo semitransparente en el mismo color que la cabecera */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 1000;
+}

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/estilos.css">
+    <title>DESAFIO 1 CS232913</title>
+    <style>
+        /* CSS para el diseño */
+        body {
+            background-color: #f4f7fa;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+
+        .cabecero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: #6a1b9a;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .presupuesto {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .presupuesto_titulo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .presupuesto_valor {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .datos {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .presupuesto_ingreso,
+        .presupuesto_egreso {
+            background: #7b1fa2;
+            padding: 10px 20px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+            color: #fff;
+            margin: 0 10px;
+        }
+
+        .agregar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .agregar_tipo {
+            margin-right: 10px;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+            height: 40px;
+            padding: 0 10px;
+            min-width: 100px;
+        }
+
+        .agregar_descripcion,
+        .agregar_valor {
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+            height: 40px;
+            padding: 0 10px;
+            margin-right: 10px;
+        }
+
+        .agregar_btn,
+        .eliminar_btn,
+        .exportar_btn,
+        .eliminar_todo_btn {
+            background-color: #6a1b9a;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            height: 40px;
+            padding: 0 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+
+        .contenedor {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .ingreso,
+        .egreso {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 300px;
+            margin: 10px 0;
+        }
+
+        h2 {
+            color: #6a1b9a;
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #lista-ingresos,
+        #lista-egresos {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .elemento {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .seleccionable {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .datos {
+                flex-direction: column;
+            }
+
+            .agregar {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .ingreso,
+            .egreso {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body onload="cargarApp()">
+<div class="cabecero">
+    <img src="css/Banner.png" alt="Descripción de la imagen" class="imagen-cabecera">
+    <div class="presupuesto">
+        <div class="presupuesto_titulo">Disponibilidad</div>
+        <div class="presupuesto_valor" id="presupuesto">+ 0.00</div>
+    </div>
+    <div class="datos">
+        <div class="presupuesto_ingreso limpiarEstilos">
+            <div class="presupuesto_ingreso--texto">Ingresos</div>
+            <div class="presupuesto_ingreso--valor" id="ingresos">+ 0.00 (0.00%)</div>
+        </div>
+        <div class="presupuesto_egreso limpiarEstilos">
+            <div class="presupuesto_egreso--texto">Egresos</div>
+            <div class="presupuesto_egreso--valor" id="egresos">- 0.00 (0.00%)</div>
+        </div>
+    </div>
+</div>
+
+<form id="forma" onsubmit="return false;">
+    <div class="agregar">
+        <select class="agregar_tipo" id="tipo">
+            <option value="ingreso" selected>Ingreso</option>
+            <option value="egreso">Egreso</option>
+        </select>
+        <input type="text" class="agregar_descripcion" placeholder="Agregar descripción" id="descripcion"/>
+        <input type="number" class="agregar_valor" placeholder="Valor" id="valor" step="any"/>
+        <button class="agregar_btn" onclick="agregarDato()">Ingresar</button>
+    </div>
+</form>
+
+<!-- Botones de eliminar y exportar -->
+<div style="text-align: center; margin: 10px;">
+    <button class="eliminar_btn" onclick="eliminarSeleccionados()">Eliminar Seleccionados</button>
+    <button class="exportar_btn" onclick="exportarExcel()">Exportar a Excel</button>
+    <button class="eliminar_todo_btn" onclick="eliminarTodo()">Eliminar Todo</button> <!-- Botón Eliminar Todo -->
+</div>
+
+<div class="contenedor">
+    <div class="ingreso">
+        <h2 class="ingreso_titulo">Ingresos</h2>
+        <div id="lista-ingresos">
+            <!-- Aquí se agregarán los ingresos dinámicamente -->
+        </div>
+    </div>
+
+    <div class="egreso">
+        <h2 class="egreso_titulo">Egresos</h2>
+        <div id="lista-egresos">
+            <!-- Aquí se agregarán los egresos dinámicamente -->
+        </div>
+    </div>
+</div>
+
+<div class="autor">
+    José Corcios CS232913
+</div>
+
+<!-- Scripts -->
+<script src="js/Dato.js"></script>
+<script src="js/Ingreso.js"></script>
+<script src="js/Egreso.js"></script>
+<script src="js/App.js"></script>
+
+</body>
+</html>
